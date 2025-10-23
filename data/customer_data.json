@@ -1,0 +1,38 @@
+{
+  "CUS001": {
+    "name": "Ayşe Kaya",
+    "preferred_style": "empathetic",
+    "history": [
+      {
+        "date": "2025-10-01",
+        "category": "technical",
+        "satisfaction": 4
+      }
+    ],
+    "tickets": [
+      {
+        "id": "TKT20250930001",
+        "status": "resolved",
+        "subject": "Login issue"
+      }
+    ]
+  },
+  "CUS002": {
+    "name": "John Doe",
+    "preferred_style": "concise",
+    "history": [
+      {
+        "date": "2025-09-15",
+        "category": "billing",
+        "satisfaction": 3
+      }
+    ],
+    "tickets": [
+      {
+        "id": "TKT20251015002",
+        "status": "open",
+        "subject": "Refund request"
+      }
+    ]
+  }
+}

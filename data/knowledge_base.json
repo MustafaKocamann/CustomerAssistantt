@@ -1,0 +1,37 @@
+[
+  {
+    "id": "KB001",
+    "title": "App Crash on Photo Upload",
+    "category": "technical",
+    "content": "Clear cache, update to latest app version >= 2.5.1, check photo size < 10MB, try safe mode.",
+    "tags": [
+      "crash",
+      "upload",
+      "photo",
+      "android",
+      "ios"
+    ]
+  },
+  {
+    "id": "KB002",
+    "title": "Billing: Unexpected Charge",
+    "category": "billing",
+    "content": "Verify plan, check add-ons, examine invoice line items, apply refund policy if mischarge.",
+    "tags": [
+      "billing",
+      "charge",
+      "invoice"
+    ]
+  },
+  {
+    "id": "KB003",
+    "title": "Product Roadmap cadence",
+    "category": "general",
+    "content": "Minor features ship bi-weekly; major features quarterly. Public changelog updated every Friday.",
+    "tags": [
+      "roadmap",
+      "features",
+      "release"
+    ]
+  }
+]

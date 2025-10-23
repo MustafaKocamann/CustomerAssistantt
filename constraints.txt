@@ -1,0 +1,6 @@
+# Additional upper bounds to avoid accidental numpy rebuilds or ABI clashes
+# Use with: pip install -r requirements.txt -c constraints.txt
+# Wheels for 3.13 exist for these combos (manylinux/macos/windows).
+protobuf<6
+pyarrow<18  # streamlit dep; adjust when needed
+httpx<1.0.0
