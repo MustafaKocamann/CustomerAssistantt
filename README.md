@@ -1,93 +1,41 @@
-# Smart Customer Support System (LangChain-Ready) — Python 3.13 Safe
+# 🤖 AI Assistant Pro
+# Akıllı Müşteri Destek ve Yönerge Analiz Sistemi
 
-**Teslim tarihi:** 2025-10-22
+## 📘 Proje Özeti
+* AI Assistant Pro, OpenAI ve LangChain tabanlı bir yapay zeka destekli müşteri destek ve belge analiz platformudur.
+* Kullanıcı mesajlarını analiz eder, otomatik yanıtlar üretir ve PDF/DOCX/TXT belgelerindeki yönergeleri özetleyip açıklar.
+* Uygulama, modern bir Streamlit arayüzü ve KVKK uyumlu veri işleme yaklaşımıyla tasarlanmıştır.
 
-Bu repo, ödevdeki tüm gereksinimleri karşılayan ve **Python 3.13** ile sorunsuz çalışacak şekilde
-sürüm-pinned edilen bir örnek projedir. Varsayılan olarak kurallar _LLM bağımlılığını minimuma indirir_;
-isterseniz LangChain/OpenAI entegrasyonlarını kolayca devreye alabilirsiniz.
+## 🚀 Özellikler
+* 💬 Müşteri Destek Sistemi — Müşteri mesajlarını analiz eder, uygun yapay zeka yanıtı üretir.
+* 📘 Yönerge Özetleyici Chatbot — PDF, DOCX ve TXT belgelerini yükleyip doğal dilde sorular sorabilirsiniz.
+* 🔍 OpenAI GPT Entegrasyonu — gpt-4o-mini modeliyle yüksek doğrulukta metin analizi.
+* 🧠 LangChain Prompt Pipeline — Dinamik prompt yönetimi ve LLM zincirleme işlemleri.
+* 🖥️ Streamlit UI — Modern, duyarlı, koyu temalı bir kullanıcı arayüzü.
+*🔒 KVKK Uyumlu — Veriler anlık olarak işlenir, sistemde saklanmaz.
 
-## Özellikler
-- Multi-Chain akışı: **Analysis ➜ Response ➜ Quality**
-- Hibrit memory (özet + pencere + metadata)
-- Custom Tools: ticket, knowledge base, customer DB
-- Basit streaming handler (token token yazdırır)
-- Testler (unit + integration)
-- Streamlit için hazır (opsiyonel UI eklemeniz kolay)
+| Katman                   | Teknoloji                             |
+| ------------------------ | ------------------------------------- |
+| **Frontend**             | Streamlit, HTML, CSS (custom styling) |
+| **Backend / LLM**        | OpenAI API (`gpt-4o-mini`), LangChain |
+| **Veri İşleme**          | PyPDF2, python-docx                   |
+| **Yapılandırma**         | python-dotenv                         |
+| **Destekleyici Araçlar** | Pandas, Numpy, Tiktoken               |
 
-## Kurulum (Python 3.13)
-```bash
-python -m venv .venv
-source .venv/bin/activate  # Windows: .venv\Scripts\activate
-python -V  # 3.13.x olmalı
-pip install --upgrade pip
-pip install -r requirements.txt -c constraints.txt
-cp .env.example .env
-```
+## 🧠 Modüller
+### 💼 1. Müşteri Destek Sistemi
+* Kullanıcı mesajını alır (text_input, text_area).
+* SmartCustomerSupportSystem sınıfı ile analiz eder.
+* GPT tabanlı önerilen yanıt üretir.
+* Yanıtı şık bir kutuda (result-box) gösterir.
 
-> **Not:** Eğer ARM/M1/M2 macOS kullanıyorsanız ve eski `pip` yüzünden source build'e düşüyorsanız
-> `pip install --upgrade pip wheel setuptools` komutu yardımcı olur.
+### 📘 2. Yönerge Özetleyici Chatbot
+* Kullanıcıdan PDF, DOCX veya TXT yüklemesi alır.
+* Dosyadan metni çıkarır (extract_text fonksiyonu).
+* Sorulan soruya göre yönergeyi özetleyip detaylı açıklama verir.
+* Yanıt ChatPromptTemplate → ChatOpenAI zinciriyle üretilir.
 
-## Çalıştırma
-```bash
-python main.py
-```
-
-## Streamlit (opsiyonel)
-Basit bir UI için aşağıdaki dosyayı oluşturup çalıştırabilirsiniz:
-`streamlit_app.py`
-```python
-import streamlit as st
-from main import SmartCustomerSupportSystem
-
-st.set_page_config(page_title="Smart Support", page_icon="🤖")
-st.title("🤖 Smart Customer Support")
-
-sys = SmartCustomerSupportSystem()
-cid = st.text_input("Customer ID", "CUS001")
-msg = st.text_area("Message", "Uygulamanız sürekli çöküyor, nasıl çözebilirim?")
-
-if st.button("Send"):
-    out = sys.handle_customer_request(cid, msg)
-    st.json(out)
-```
-
-```bash
-streamlit run streamlit_app.py
-```
-
-### Streamlit Cloud
-- Kök dizine `runtime.txt` ekleyin: `python-3.13`
-- Eğer pyarrow kaynaklı bir uyarı alırsanız `constraints.txt` içindeki `pyarrow<18` sınırını kaldırabilirsiniz.
-
-## LangChain/OpenAI'ı devreye alma
-Kod şablonu kasıtlı olarak hafif tutuldu. Aşağıdaki noktadan itibaren LLM ekleyebilirsiniz:
-- `chains/response_chain.py` içinde `ResponseGenerationChain.__call__` gövdesi
-- Örnek (pseudo):
-```python
-from langchain_openai import ChatOpenAI
-llm = ChatOpenAI(model=os.getenv("OPENAI_MODEL","gpt-4o-mini"))
-resp = llm.invoke("...prompt...")
-```
-
-## Testler
-```bash
-pytest -q
-```
-
-## Dosya Yapısı
-(ödevde verilen yapı birebir)
-
-## Sürüm Notları
-- `numpy>=2.1` Python 3.13 için zorunludur.
-- `pandas 2.2.3` 3.13 tekerlekleri sağlar.
-- `streamlit 1.39+` 3.13 desteği bildirir.
-- `langchain 0.3.x` split paket mimarisiyle çalışır.
-
-## Sorun Giderme
-- **`Failed building wheel for ...`**: `pip install --upgrade pip wheel setuptools`
-- **`numpy 1.x` ile build'e düşüyor**: Eski paket pin’i; `pip show numpy` → 2.1+ olmalı.
-- **`openai` hataları**: `.env` içindeki `OPENAI_API_KEY` değerini kontrol edin.
-- **Çakışan bağımlılıklar**: `pip install -r requirements.txt -c constraints.txt` kullanın.
-
-## Lisans
-Eğitim amaçlı örnek.
+## 🔐 KVKK & Güvenlik
+* Veriler yalnızca geçici bellekte işlenir.
+* Hiçbir kullanıcı içeriği sistemde saklanmaz.
+* API anahtarı .env içinde gizli tutulur.
